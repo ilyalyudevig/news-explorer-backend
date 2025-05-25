@@ -1,6 +1,6 @@
 # News Explorer Backend
 
-A backend Express.js server for the [News Explorer](https://news-explorer.info) project.
+An Express.js server for the [News Explorer](https://news-explorer.info) project.
 
 Technologies used are:
 

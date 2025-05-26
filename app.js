@@ -13,6 +13,7 @@ const NotFoundError = require("./errors/NotFoundError");
 
 const app = express();
 const { PORT = 3001 } = process.env;
+const { dbAddress } = process.env;
 
 app.use(cors());
 app.use(helmet());
@@ -22,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(limiter);
 
-mongoose.connect("mongodb://127.0.0.1:27017/news_explorer_db");
+mongoose.connect(`mongodb://${dbAddress}`);
 
 app.use(requestLogger);
 app.use("/", routes);

@@ -1,5 +1,7 @@
 # News Explorer Backend
 
+[![CI](https://github.com/ilyalyudevig/news-explorer-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/ilyalyudevig/news-explorer-backend/actions/workflows/ci.yml)
+
 This repository contains the backend for the [News Explorer](https://news-explorer.info) application, a service for discovering and saving news articles. It is built with Node.js and Express, and it provides a RESTful API for managing users and articles.
 
 ## Interesting Techniques

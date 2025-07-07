@@ -9,6 +9,7 @@ const BadRequestError = require("../errors/BadRequestError");
 const ConflictError = require("../errors/ConflictError");
 const InternalServerError = require("../errors/InternalServerError");
 const UnauthorizedError = require("../errors/UnauthorizedError");
+const TooManyRequestsError = require("../errors/TooManyRequestsError");
 
 module.exports.getCurrentUser = (req, res, next) => {
   const userId = req.user._id;
@@ -70,5 +71,16 @@ module.exports.login = (req, res, next) => {
       });
       res.send({ token });
     })
-    .catch(next);
+    .catch((err) => {
+      // Handle rate limiting - if too many requests
+      if (err.statusCode === 429) {
+        next(
+          new TooManyRequestsError(
+            "Too many login attempts. Please try again later."
+          )
+        );
+      } else {
+        next(err);
+      }
+    });
 };

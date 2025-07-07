@@ -34,9 +34,10 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
-// Start server and connect to DB only if not in test environment
+mongoose.connect(process.env.MONGODB_URI || `mongodb://${dbAddress}`);
+
+// Start server only if not in test environment
 if (process.env.NODE_ENV !== 'test') {
-  mongoose.connect(`mongodb://${dbAddress}`);
   app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
   });

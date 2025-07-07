@@ -1,9 +1,15 @@
 import { test, expect } from "@playwright/test";
-import { setup, teardown } from "./test-setup";
+import mongoose from "mongoose";
 import User from "../../models/user";
 
-test.beforeAll(setup);
-test.afterAll(teardown);
+test.beforeAll(async () => {
+  await mongoose.connect(process.env.MONGODB_URI);
+});
+
+test.afterAll(async () => {
+  await mongoose.disconnect();
+});
+
 test.afterEach(async () => {
   await User.deleteMany({});
 });
@@ -19,6 +25,6 @@ test.describe("User API", () => {
     });
     expect(response.status()).toBe(201);
     const json = await response.json();
-    expect(json).toHaveProperty("user.email", "test@example.com");
+    expect(json.user.email).toBe("test@example.com");
   });
 });

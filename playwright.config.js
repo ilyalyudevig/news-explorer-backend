@@ -1,10 +1,11 @@
-// playwright.config.js
 import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests/api",
   timeout: 30000,
+  globalSetup: "./tests/api/global-setup.js",
+  globalTeardown: "./tests/api/global-teardown.js",
   use: {
-    baseURL: "http://localhost:3001",
+    baseURL: process.env.BASE_URL,
   },
 });

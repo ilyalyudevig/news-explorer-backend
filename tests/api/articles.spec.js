@@ -1,12 +1,18 @@
 import { test, expect } from "@playwright/test";
-import { setup, teardown } from "./test-setup";
+import mongoose from "mongoose";
 import Article from "../../models/article";
 import User from "../../models/user";
 
 let authToken;
 let user;
 
-test.beforeAll(setup);
+test.beforeAll(async () => {
+  await mongoose.connect(process.env.MONGODB_URI);
+});
+
+test.afterAll(async () => {
+  await mongoose.disconnect();
+});
 
 test.beforeEach(async ({ request }) => {
   // Create a user and get a token for authenticated requests
@@ -31,7 +37,7 @@ test.beforeEach(async ({ request }) => {
   authToken = loginData.token;
 });
 
-test.afterAll(teardown);
+
 test.afterEach(async () => {
   await Article.deleteMany({});
   await User.deleteMany({});

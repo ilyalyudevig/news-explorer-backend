@@ -50,7 +50,7 @@ module.exports.createArticle = (req, res, next) => {
     keywords,
     owner: req.user._id,
   })
-    .then((article) => res.send(article))
+    .then((article) => res.status(201).send(article))
     .catch((err) => {
       if (err.name === "ValidationError") {
         next(new BadRequestError("Invalid data"));

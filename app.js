@@ -23,8 +23,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(limiter);
 
-mongoose.connect(`mongodb://${dbAddress}`);
-
 app.use(requestLogger);
 app.use("/", routes);
 
@@ -36,6 +34,12 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
-});
+// Start server and connect to DB only if not in test environment
+if (process.env.NODE_ENV !== 'test') {
+  mongoose.connect(`mongodb://${dbAddress}`);
+  app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
+  });
+}
+
+module.exports = app;

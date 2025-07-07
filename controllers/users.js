@@ -36,7 +36,7 @@ module.exports.createUser = (req, res, next) => {
       if (!user) {
         throw new InternalServerError("User creation failed");
       }
-      res.send({
+      res.status(201).send({
         user: {
           email: user.email,
           name: user.name,

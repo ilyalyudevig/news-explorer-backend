@@ -23,5 +23,16 @@ module.exports = {
     "no-underscore-dangle": 0,
     "no-console": 0,
     "no-unused-vars": ["error", { argsIgnorePattern: "next" }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        devDependencies: [
+          "**/*.test.js",
+          "**/*.spec.js",
+          "**/playwright.config.js",
+          "**/tests/**",
+        ],
+      },
+    ],
   },
 };

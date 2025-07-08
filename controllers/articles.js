@@ -1,20 +1,8 @@
-const { Joi } = require("celebrate");
-
 const Article = require("../models/article");
 
 const BadRequestError = require("../errors/BadRequestError");
 const NotFoundError = require("../errors/NotFoundError");
 const ForbiddenError = require("../errors/ForbiddenError");
-
-const articleSchema = Joi.object({
-  source: Joi.string().required(),
-  title: Joi.string().required(),
-  content: Joi.string().required(),
-  url: Joi.string().uri().required(),
-  urlToImage: Joi.string().uri().required(),
-  publishedAt: Joi.string().isoDate().required(),
-  keywords: Joi.array().items(Joi.string()).optional(),
-});
 
 module.exports.getArticles = (req, res, next) => {
   const userId = req.user._id;
@@ -25,20 +13,6 @@ module.exports.getArticles = (req, res, next) => {
 module.exports.createArticle = (req, res, next) => {
   const { source, title, content, url, urlToImage, publishedAt, keywords } =
     req.body;
-
-  const { error } = articleSchema.validate({
-    source,
-    title,
-    content,
-    url,
-    urlToImage,
-    publishedAt,
-    keywords,
-  });
-
-  if (error) {
-    next(new BadRequestError("Invalid article data: ", error));
-  }
 
   Article.create({
     source,

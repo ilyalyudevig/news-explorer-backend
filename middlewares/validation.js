@@ -40,3 +40,33 @@ module.exports.validateArticleId = celebrate({
     }),
   }),
 });
+
+module.exports.validateArticleData = celebrate({
+  body: Joi.object().keys({
+    source: Joi.string().required().messages({
+      "string.empty": 'The "source" field must be filled in',
+    }),
+    title: Joi.string().required().messages({
+      "string.empty": 'The "title" field must be filled in',
+    }),
+    content: Joi.string().required().messages({
+      "string.empty": 'The "content" field must be filled in',
+    }),
+    url: Joi.string().required().uri().messages({
+      "string.empty": 'The "url" field must be filled in',
+      "string.uri": 'The "url" field must be a valid URL',
+    }),
+    urlToImage: Joi.string().required().uri().messages({
+      "string.empty": 'The "urlToImage" field must be filled in',
+      "string.uri": 'The "urlToImage" field must be a valid URL',
+    }),
+    publishedAt: Joi.string().required().isoDate().messages({
+      "string.empty": 'The "publishedAt" field must be filled in',
+      "string.isoDate": 'The "publishedAt" field must be a valid ISO date',
+    }),
+    keywords: Joi.array().items(Joi.string()).required().messages({
+      "array.empty": 'The "keywords" field must not be empty',
+      "any.required": 'The "keywords" field is required',
+    }),
+  }),
+});

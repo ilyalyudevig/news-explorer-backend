@@ -24,6 +24,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(limiter);
 
 app.use(requestLogger);
+
+if (process.env.NODE_ENV !== 'production') {
+  const testingRouter = require('./routes/testing');
+  app.use('/testing', testingRouter);
+}
+
 app.use("/", routes);
 
 app.use((req, res, next) => {
